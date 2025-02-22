@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Correcte hook
 
 const ProductCard = () => {
+    const navigation = useNavigation(); // Correcte hook gebruiken
+
     return (
         <View style={styles.card}>
             <Image 
@@ -11,22 +14,19 @@ const ProductCard = () => {
             <Text style={styles.title}>Katje</Text>
             <Text style={styles.description}>Dit katje is heel lief!</Text>
 
-            {/* Button die geen actie doet */}
-            <View style={styles.button}>
-                <Text style={styles.buttonText}>Ontmoet</Text>
-            </View>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('ProductDetail')} // Correcte navigatie
+            >
+                <Text style={styles.buttonText}>Bekijk</Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',  // Zet de kaarten naast elkaar
-        flexWrap: 'wrap',  // Zorgt ervoor dat de kaarten op een nieuwe rij komen als er geen ruimte is
-        justifyContent: 'space-evenly',  // Zorgt voor ruimte tussen de kaarten
-    },
     card: {
-        width: 170,  // Verklein de breedte van de kaarten
+        width: 170,
         padding: 16,
         backgroundColor: 'white',
         borderRadius: 8,

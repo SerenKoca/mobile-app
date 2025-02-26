@@ -2,23 +2,17 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Correcte hook
 
-const ProductCard = () => {
+const ProductCard = ({ title, subtitle, price, image, onPress}) => {
     const navigation = useNavigation(); // Correcte hook gebruiken
 
     return (
         <View style={styles.card}>
-            <Image 
-                style={styles.image} 
-                source={require('../images/bozeKat.jpg')} 
-            />
-            <Text style={styles.title}>Katje</Text>
-            <Text style={styles.description}>Dit katje is heel lief!</Text>
+            <Image style={styles.image} source={image} />
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.description}>{subtitle}</Text>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('ProductDetail')} // Correcte navigatie
-            >
-                <Text style={styles.buttonText}>Bekijk</Text>
+            <TouchableOpacity style={styles.button} onPress={onPress} >
+                <Text style={styles.buttonText}>Bekijk product</Text>
             </TouchableOpacity>
         </View>
     );

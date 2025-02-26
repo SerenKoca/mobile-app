@@ -1,20 +1,49 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+
 import ProductCard from '../components/ProductCard.js';
 
-const HomeScreen = () => {
+import Katje1Image from '../images/bozeKat.jpg';
+import Katje2Image from '../images/bozeKat.jpg';
+
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Onze Katjes!</Text>
 
-      {/* Container voor de kaarten */}
-      <View style={styles.cardContainer}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </View>
+      <ScrollView contentContainerStyle={styles.cardContainer}>
+        <ProductCard
+          title="Katje Nelly"
+          subtitle="Diersoort: Katje"
+          price="150"
+          image={Katje1Image}
+          onPress={() =>
+            navigation.navigate('ProductDetail', {
+              title: 'Katje Nelly',
+              subtitle: 'Diersoort: Katje',
+              price: '150',
+              image: Katje1Image,
+            })
+          }
+        />
+        
+        <ProductCard
+          title="Katje Bella"
+          subtitle="Diersoort: Katje"
+          price="180"
+          image={Katje2Image}
+          onPress={() =>
+            navigation.navigate('ProductDetail', {
+              title: 'Katje Bella',
+              subtitle: 'Diersoort: Katje',
+              price: '180',
+              image: Katje2Image,
+            })
+          }
+        />
+        
+      </ScrollView>
 
       <StatusBar style="auto" />
     </View>
@@ -26,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#91c98c',
     alignItems: 'center',
-    justifyContent: 'flex-start',  // Verander naar flex-start zodat het niet volledig in het midden staat
+    justifyContent: 'flex-start',
     paddingTop: 16,
   },
   title: {
@@ -37,13 +66,12 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   cardContainer: {
-    flexDirection: 'row',  // Zorgt ervoor dat de kaarten naast elkaar staan
-    flexWrap: 'wrap',  // Zorgt ervoor dat ze naar de volgende rij gaan als er geen ruimte meer is
-    justifyContent: 'space-evenly',  // Verdeel de kaarten gelijkmatig
-    width: '100%',  // Zorgt ervoor dat de container de volledige breedte van het scherm heeft
-    paddingHorizontal: 16,  // Voeg wat ruimte toe aan de zijkanten
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    width: '100%',
+    paddingHorizontal: 16,
   },
-  
 });
 
 export default HomeScreen;

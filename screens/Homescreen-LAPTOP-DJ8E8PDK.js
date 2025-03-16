@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
   }, []);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Onze producten!</Text>
+      <Text style={styles.title}>Onze Katjes!</Text>
 
       <ScrollView contentContainerStyle={styles.cardContainer}>
        
@@ -45,7 +45,7 @@ const HomeScreen = ({ navigation }) => {
             subtitle={product.subtitle}
             price={product.price}
             image={product.image}
-            onPress={() => navigation.navigate("ProductDetail", product)}
+            onPress={() => navigation.navigate("Details", product)}
           />
         ))}
         

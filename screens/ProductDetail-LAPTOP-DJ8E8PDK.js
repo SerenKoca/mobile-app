@@ -15,7 +15,7 @@ const DetailsScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
-      <Image style={styles.image} source={{uri: image.uri}} />
+      <Image style={styles.image} source={{imuri: image.uri}} />
       <Text style={styles.subtitle}>{subtitle}</Text>
       <Text style={styles.price}>€{price}</Text>
 

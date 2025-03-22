@@ -1,11 +1,22 @@
 import React, { useEffect, useState} from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-
+import { StyleSheet, Text, View, ScrollView, TextInput } from 'react-native';
 import ProductCard from '../components/ProductCard.js';
+import { Picker} from '@react-native-picker/picker';
+
+const categoryNames = {
+  "" : "Alle categorieën",
+  "67dec50905ee85ebb5a62183" : "Honden",
+  "67bf15c3f8eceddc0007b196" : "Katten",
+  "67dec546050dd1d08868f781" : "Knaagdieren",
+  "67dec5567152b7b46a832c24" : "Vogels",
+  "67dec54e9813cb129f15a5ef" : "Vissen",
+};
 
 const HomeScreen = ({ navigation }) => {
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("price-asc");
 
   useEffect(() => {
     fetch(
@@ -26,19 +37,63 @@ const HomeScreen = ({ navigation }) => {
           subtitle: item.product.fieldData.description,
           price: (item.skus[0]?.fieldData.price.value || 0) / 100,
           image: { uri: item.skus[0]?.fieldData["main-image"]?.url },
+          category:
+            categoryNames[item.product.fieldData.category[0]] || "Onbekend",
         }))
     )
   )
   .catch((err) => console.error("Error: ", err));
   }, []);
+
+  const filteredProducts = products.filter((p) =>
+    (selectedCategory === "" || p.category === selectedCategory) &&
+    p.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortOption === "price-asc") return a.price - b.price;
+    if (sortOption === "price-desc") return b.price - a.price;
+    if (sortOption === "name-asc") return a.title.localeCompare(b.title);
+    if (sortOption === "name-desc") return b.title.localeCompare(a.title);
+  });
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Onze producten!</Text>
-
       <ScrollView contentContainerStyle={styles.cardContainer}>
-       
+        <TextInput
+          style={styles.searchInput}
+          placeholder = "Zoek een model..."
+          placeholderTextColor = "#666"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          />
+        <View style={styles.pickerContainer}>
+       <Picker
+        selectedValue={selectedCategory}
+        onValueChange={setSelectedCategory}
+        style={styles.picker}
+        >
+        <Picker.Item label="Alle categorieën" value="" />
+        {[...new Set(products.map((p) => p.category))].map((category) => (
+          <Picker.Item key={category} label={category} value={category} />
+        ))}
+        </Picker>
+        </View>
+        <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={sortOption}
+          onValueChange={setSortOption}
+          style={styles.picker}
+        >
+          <Picker.Item label="Prijs (laag-hoog)" value="price-asc" />
+          <Picker.Item label="Prijs (hoog-laag)" value="price-desc" />
+          <Picker.Item label="Naam (A-Z)" value="name-asc" />
+          <Picker.Item label="Naam (Z-A)" value="name-desc" />
+        </Picker>
+        </View>
        <View style={styles.row}>
-        {products.map((product) => (
+        {sortedProducts.map((product) => (
           <ProductCard
             key={product.id}
             title={product.title}
@@ -69,6 +124,29 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 16,
     color: 'white',
+  },
+  pickerContainer: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  searchInput: {
+    height: 40,
+    width: '90%',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 20,
+    color: '#333',
+  },
+  picker: {
+    height: 60,
+    width: '100%',
+    color: '#333',
   },
   cardContainer: {
     flexDirection: 'row',

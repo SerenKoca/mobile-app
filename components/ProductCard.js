@@ -24,7 +24,7 @@ const ProductCard = ({ title, price, image, onPress, onToggleWishlist, isInWishl
 
 const styles = StyleSheet.create({
   card: {
-    width: '48%',
+    width: '45%',
     padding: 10,
     backgroundColor: 'white',
     borderRadius: 8,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#91c98c',
+    color: '#164723',
     marginBottom: 8,
   },
   button: {

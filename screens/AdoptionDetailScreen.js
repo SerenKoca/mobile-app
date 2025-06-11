@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
 const AdoptionDetailScreen = ({ route }) => {
-  const { name, dateOfBirth, image, description } = route.params;
+  const { name, animal, dateOfBirth, image, description } = route.params;
 
   const calculateAge = (dob) => {
     if (!dob) return null;
@@ -23,15 +23,29 @@ const AdoptionDetailScreen = ({ route }) => {
           <Text style={styles.placeholderText}>Geen foto beschikbaar</Text>
         </View>
       )}
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.age}>{age !== null ? `${age} jaar` : 'Leeftijd onbekend'}</Text>
-      <Text style={styles.description}>{description || 'Geen beschrijving beschikbaar.'}</Text>
+
+      <View style={styles.infoBox}>
+        <View style={styles.headerRow}>
+          <View>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.age}>{age !== null ? `${age} jaar` : 'Leeftijd onbekend'}</Text>
+          </View>
+
+          <View style={styles.animalBadge}>
+            <Text style={styles.animalText}>{animal || 'Soort onbekend'}</Text>
+          </View>
+        </View>
+
+        <Text style={styles.description}>{description || 'Geen beschrijving beschikbaar.'}</Text>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexGrow: 1,
+    flex: 1,
     padding: 16,
     backgroundColor: '#91c98c',
     alignItems: 'center',
@@ -51,20 +65,48 @@ const styles = StyleSheet.create({
     color: '#999',
     fontSize: 16,
   },
+  infoBox: {
+    width: '100%',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',  
+    marginBottom: 12,
+  },
   name: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 8,
+    color: '#164723',
   },
   age: {
     fontSize: 18,
-    color: '#666',
-    marginBottom: 16,
+    color: '#164723',
+    marginTop: 4,
+  },
+  animalBadge: {
+    backgroundColor: '#ec5c38',
+    borderRadius: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+  },
+  animalText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   description: {
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 22,
-    color: '#333',
+    color: '#164723',
   },
 });
 

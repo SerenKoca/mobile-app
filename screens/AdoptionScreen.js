@@ -53,6 +53,8 @@ const AdoptionScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.headerTitle}>Onze beschikbare vriendjes</Text>
+    <Text style={styles.Subtitle}>Kijk en maak kennis met onze schattige huisdieren die op een nieuw thuis wachten!</Text>
       {adoptions.length === 0 ? (
         <Text style={styles.center}>Geen adopties gevonden.</Text>
       ) : (
@@ -86,11 +88,26 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 40,
     backgroundColor: '#91c98c',
+    flexGrow: 1,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 5,
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  Subtitle: {
+    fontSize: 18,
+    color: 'white',
+    marginBottom: 16,
+    textAlign: 'center',
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   center: {
     flex: 1,

@@ -16,10 +16,14 @@ const DetailsScreen = ({ route }) => {
   //De details van het product worden hier weergegeven.
   return (
     <View style={styles.container}>
+      <View style={styles.containerProduct}>
       <Text style={styles.title}>{title}</Text>
       <Image style={styles.image} source={{uri: image.uri}} />
-      <Text style={styles.subtitle}>{subtitle}</Text>
       <Text style={styles.price}>€{price}</Text>
+      <Text style={styles.subtitle}>{subtitle}</Text>
+      
+
+      </View>
 
       <View style={styles.quantityContainer}>
           <TouchableOpacity style={styles.button} onPress={decreaseQuantity}>
@@ -33,7 +37,7 @@ const DetailsScreen = ({ route }) => {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.price}>Totaal: €{price * quantity}</Text>
+        <Text style={styles.priceTotal}>Totaal: €{price * quantity}</Text>
      
     </View>
   );
@@ -47,39 +51,55 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
   },
+  containerProduct: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 8,
+    marginBottom: 20,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: 'white',
+    color: '#164723',
   },
   image: {
     width: '50%',
     height: 150,
     borderRadius: 8,
     marginBottom: 16,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.9,
+    shadowRadius: 20,
+    elevation: 10,
   },
   subtitle: {
     fontSize: 18,
-    color: 'white',
+    color: '#164723',
+    textAlign: 'center',
   },
   price: {
-    fontSize: 20,
-    color: 'white',
+    fontSize: 25,
+    color: '#164723',
+    textAlign: 'center',
   },
   button: {
-    backgroundColor: '#FF5733',  // Oranje kleur
-    padding: 10,
-    borderRadius: 50,  // Ronde knoppen
-    width: 40,
-    height: 40,
+    backgroundColor: '#FF5733',
+    borderRadius: 50,
+    width: 50,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 10,
   },
   
   buttonText: {
-    fontSize: 20,
+    fontSize: 30,
     color: 'white',
     fontWeight: 'bold',
   },
@@ -87,14 +107,19 @@ const styles = StyleSheet.create({
   quantity: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#164723',
     marginHorizontal: 10,
     alignItems: 'center',
   },
+    priceTotal: {
+    fontSize: 28,
+    color: '#164723',
+    fontWeight: 'bold',
+  },
   quantityContainer: {
-    flexDirection: 'row',  // Zet de items naast elkaar
-    alignItems: 'center',  // Zorgt dat ze op dezelfde lijn blijven
-    marginVertical: 16,  // Ruimte boven en onder
+    flexDirection: 'row',  
+    alignItems: 'center', 
+    marginVertical: 16, 
   },
   
 });

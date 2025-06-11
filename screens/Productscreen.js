@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Constants from 'expo-constants';
-import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import ProductCard from '../components/ProductCard.js';
 import { Picker } from '@react-native-picker/picker';
 
@@ -80,15 +80,20 @@ const ProductScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <SafeAreaView style={styles.container}>
+      {/* Sticky wishlist knop */}
+      <TouchableOpacity
+        style={styles.wishlistButton}
+        onPress={() => navigation.navigate("Wishlist", { wishlist })}
+      >
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>{wishlist.length}</Text>
+        </View>
+        <Text style={styles.wishlistButtonText}>Wishlist</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.wishlistButton}
-          onPress={() => navigation.navigate("Wishlist", { wishlist })}
-        >
-          <Text style={styles.buttonText}>Wishlist ({wishlist.length})</Text>
-        </TouchableOpacity>
+      {/* Scrollbare content */}
+      <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingTop: 80 }}>
 
         <Text style={styles.title}>Onze Producten</Text>
 
@@ -134,67 +139,84 @@ const ProductScreen = ({ navigation }) => {
         </View>
 
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: '#91c98c', 
-    alignItems: 'center', 
-    paddingTop: 16 
-},
-  title: { 
-    fontSize: 24, 
-    fontWeight: 'bold', 
-    marginTop: 30, 
-    marginBottom: 16, 
-    color: 'white' 
-},
-  pickerContainer: { 
-    backgroundColor: 'white', 
-    borderRadius: 8, 
-    padding: 5, 
-    marginBottom: 20, 
-    alignSelf: 'stretch' 
-},
-  searchInput: { 
-    height: 40, 
-    backgroundColor: 'white', 
-    borderRadius: 8, 
-    padding: 10, 
-    marginBottom: 20, 
-    alignSelf: 'stretch' 
-},
-  scrollContent: { 
-    flexGrow: 1, 
-    paddingBottom: 16 
-},
-  cardContainer: { 
-    flexDirection: 'row', 
-    flexWrap: 'wrap', 
-    justifyContent: 'space-evenly', 
-    width: '100%', 
-    marginBottom: 16 
+  container: {
+    flex: 1,
+    backgroundColor: '#91c98c',
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  blogButton: { 
-    backgroundColor: '#ec5c38', 
-    padding: 10, 
-    borderRadius: 10, 
-    alignItems: 'center', 
-    marginBottom: 20 
+  scrollView: {
+    flex: 1,
   },
-  wishlistButton: { 
-    backgroundColor: '#ffa500', 
-    padding: 10, 
-    borderRadius: 10, 
-    alignItems: 'center', 
-    marginBottom: 20 
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: 'white',
+    paddingHorizontal: 10,
   },
-  buttonText: { 
-    fontSize: 16, 
-    color: 'white' 
+  pickerContainer: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 5,
+    marginHorizontal: 10,
+    marginBottom: 20,
+  },
+  searchInput: {
+    height: 40,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 10,
+    marginHorizontal: 10,
+    marginBottom: 20,
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    width: '100%',
+    marginBottom: 16,
+  },
+  wishlistButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ec5c38',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    zIndex: 999,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+  },
+  badge: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 6,
+  },
+  badgeText: {
+    color: '#ec5c38',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  wishlistButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

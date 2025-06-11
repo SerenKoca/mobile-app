@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
 
 const BlogDetailScreen = ({ route }) => {
-  const { title, date, content, image } = route.params; // Haal de blogdata op via de route params
+  const { title, date, content, image } = route.params;
 
-  // Functie om de datum te formatteren naar een leesbaar formaat
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('nl-NL', {
@@ -14,22 +13,9 @@ const BlogDetailScreen = ({ route }) => {
     });
   };
 
-  // Functie om de HTML-tekst om te zetten naar gewone tekst en afbeeldingen
   const renderHtmlContent = (htmlContent) => {
-    // Stap 1: Vervang <img> tags door een react-native <Image> component
-    const imgRegex = /<img[^>]+src="([^">]+)"/g;
-    const imageMatches = [...htmlContent.matchAll(imgRegex)];
-
-    // Stap 2: Vervang <p> tags en andere HTML tags door tekst en <Image> componenten
-    let formattedContent = htmlContent.replace(imgRegex, (match, src) => {
-      return `<Image src="${src}" />`;
-    });
-
-    // Stap 3: Verwijder de overige HTML tags, zodat je alleen de tekst overhoudt
-    formattedContent = formattedContent.replace(/<[^>]+>/g, '');
-
-    // Stap 4: Maak de string klaar om te renderen (bijvoorbeeld door 'Image' tags in een React Native Image component te vervangen)
-    return formattedContent;
+    // Voor nu gewoon plain text, HTML parsing kan complex zijn in React Native
+    return htmlContent.replace(/<[^>]+>/g, '');
   };
 
   return (
@@ -42,11 +28,11 @@ const BlogDetailScreen = ({ route }) => {
           />
         )}
 
-        <Text style={styles.title}>{title}</Text>
-
-        <Text style={styles.date}>{formatDate(date)}</Text>
-
-        <Text style={styles.content}>{renderHtmlContent(content)}</Text>
+        <View style={styles.contentBox}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.date}>{formatDate(date)}</Text>
+          <Text style={styles.content}>{renderHtmlContent(content)}</Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -58,22 +44,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#91c98c',
     padding: 16,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 10,
-  },
-  date: {
-    fontSize: 14,
-    color: '#ddd',
-    marginBottom: 20,
-  },
-  content: {
-    fontSize: 16,
-    color: 'white',
-    lineHeight: 24,
-    marginBottom: 20,  // Ruimte aan de onderkant van de tekst
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 16,
   },
   image: {
     width: '100%',
@@ -81,9 +54,32 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingBottom: 16,
+  contentBox: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#164723',
+    marginBottom: 10,
+  },
+  date: {
+    fontSize: 16,
+    textDecorationLine: 'underline',
+    color: '#164723',
+    marginBottom: 20,
+  },
+  content: {
+    fontSize: 16,
+    color: '#164723',
+    lineHeight: 24,
   },
 });
 

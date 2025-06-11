@@ -13,41 +13,53 @@ const AdoptionCard = ({ name, animal, dateOfBirth, image, onPress }) => {
   const age = calculateAge(dateOfBirth);
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={styles.card}>
-      <View style={styles.imageContainer}>
-        {image ? (
-          <Image style={styles.image} source={{ uri: image }} resizeMode="cover" />
-        ) : (
-          <View style={[styles.image, styles.placeholder]}>
-            <Text style={styles.placeholderText}>Geen foto</Text>
-          </View>
-        )}
-      </View>
+    <View style={styles.card}>
+      <ImageContainer image={image} />
 
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.animal}>{animal || 'Dier onbekend'}</Text>
-      <Text style={styles.age}>{age !== null ? `${age} jaar` : 'Leeftijd onbekend'}</Text>
-    </TouchableOpacity>
+      <View style={styles.infoContainer}>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.animal}>{animal || 'Dier onbekend'}</Text>
+        <Text style={styles.age}>{age !== null ? `${age} jaar` : 'Leeftijd onbekend'}</Text>
+
+        <TouchableOpacity style={styles.button} onPress={onPress} activeOpacity={0.7}>
+          <Text style={styles.buttonText}>Leren kennen</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
+const ImageContainer = ({ image }) => (
+  <View style={styles.imageContainer}>
+    {image ? (
+      <Image style={styles.image} source={{ uri: image }} resizeMode="cover" />
+    ) : (
+      <View style={[styles.image, styles.placeholder]}>
+        <Text style={styles.placeholderText}>Geen foto</Text>
+      </View>
+    )}
+  </View>
+);
+
 const styles = StyleSheet.create({
   card: {
-    width: '48%',
-    padding: 10,
+    flexDirection: 'row',
+    width: '80%',            // Kaart breedte
     backgroundColor: 'white',
     borderRadius: 8,
+    padding: 10,
     marginBottom: 16,
-    alignItems: 'center',
     elevation: 2,
+    alignItems: 'center',
+    marginHorizontal: 8,     // Zorgt wat ruimte tussen kaarten in de grid
   },
   imageContainer: {
-    width: '100%',
+    width: 120,
     height: 120,
     borderRadius: 8,
     overflow: 'hidden',
     backgroundColor: '#eee',
-    marginBottom: 8,
+    marginRight: 12,
   },
   image: {
     width: '100%',
@@ -60,22 +72,38 @@ const styles = StyleSheet.create({
   placeholderText: {
     color: '#999',
   },
+  infoContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    height: 120,
+  },
   name: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#164723',
   },
   animal: {
-    fontSize: 14,
-    color: '#444',
-    marginTop: 2,
-    textAlign: 'center',
+    fontSize: 16,
+    color: '#164723',
   },
   age: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 4,
-    textAlign: 'center',
+    fontSize: 16,
+    color: '#164723',
+    fontWeight: 'bold',
+    marginTop: 2,
+  },
+  button: {
+    alignSelf: 'flex-start',
+    marginTop: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    backgroundColor: '#ec5c38',
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
 

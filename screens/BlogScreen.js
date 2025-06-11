@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Constants from 'expo-constants';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import BlogCard from '../components/BlogCard'; // pas het pad aan indien nodig
 
 const BlogScreen = ({ navigation }) => {
   const [blogs, setBlogs] = useState([]);
@@ -61,27 +62,20 @@ const BlogScreen = ({ navigation }) => {
           </Text>
         ) : blogs.length > 0 ? (
           blogs.map((blog, index) => (
-            <View key={index} style={styles.card}>
-              {blog.image && (
-                <Image source={{ uri: blog.image }} style={styles.image} />
-              )}
-              <Text style={styles.cardTitle}>{blog.title}</Text>
-              <Text style={styles.date}>{formatDate(blog.date)}</Text>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                  navigation.navigate("BlogDetail", {
-                    title: blog.title,
-                    date: blog.date,
-                    content: blog.content,
-                    image: blog.image,
-                  })
-                }
-              >
-                <Text style={styles.buttonText}>Lees meer</Text>
-              </TouchableOpacity>
-            </View>
+            <BlogCard
+              key={index}
+              title={blog.title}
+              date={formatDate(blog.date)}
+              image={blog.image}
+              onPress={() =>
+                navigation.navigate("BlogDetail", {
+                  title: blog.title,
+                  date: blog.date,
+                  content: blog.content,
+                  image: blog.image,
+                })
+              }
+            />
           ))
         ) : (
           <Text style={styles.noContent}>Geen blogs beschikbaar</Text>
@@ -107,42 +101,6 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 16,
     paddingHorizontal: 10,
-  },
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 20,
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginTop: 10,
-    textAlign: 'center',
-  },
-  date: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 8,
-  },
-  button: {
-    backgroundColor: '#FF5733',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    marginTop: 4,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: 'bold',
   },
   errorText: {
     color: 'red',

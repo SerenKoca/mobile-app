@@ -9,7 +9,8 @@ export default {
       webflowApiToken: process.env.WEBFLOW_API_TOKEN,
       webflowBlogApiUrl: process.env.WEBFLOW_BLOG_API_URL,
       webflowBlogApiToken: process.env.WEBFLOW_BLOG_API_TOKEN,
-
+      webflowAdoptionApiUrl: process.env.WEBFLOW_ADOPTION_API_URL,
+      webflowAdoptionApiToken: process.env.WEBFLOW_ADOPTION_API_TOKEN,
     },
   },
 };

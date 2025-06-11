@@ -17,7 +17,7 @@ const BlogScreen = ({ navigation }) => {
 
     fetch(webflowBlogApiUrl, {
       headers: {
-        Authorization: `Bearer ${webflowBlogApiToken}`,  // hier nieuwe variabele
+        Authorization: `Bearer ${webflowBlogApiToken}`,
       },
     })
       .then((res) => res.json())
@@ -51,38 +51,40 @@ const BlogScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#91c98c', paddingTop: 16 }}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 16 }}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16, color: 'white' }}>
-          Onze Blog
-        </Text>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.title}>Onze Blog</Text>
+
         {error ? (
-          <Text style={{ color: 'red' }}>Er is een fout opgetreden bij het laden van de blogs.</Text>
+          <Text style={styles.errorText}>
+            Er is een fout opgetreden bij het laden van de blogs.
+          </Text>
         ) : blogs.length > 0 ? (
           blogs.map((blog, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.blogCard}
-              onPress={() =>
-                navigation.navigate("BlogDetail", {
-                  title: blog.title,
-                  date: blog.date,
-                  content: blog.content,
-                  image: blog.image,
-                })
-              }
-            >
+            <View key={index} style={styles.card}>
               {blog.image && (
                 <Image source={{ uri: blog.image }} style={styles.image} />
               )}
-              <Text style={styles.blogTitle}>{blog.title}</Text>
-              <Text style={styles.blogDate}>{formatDate(blog.date)}</Text>
-            </TouchableOpacity>
+              <Text style={styles.cardTitle}>{blog.title}</Text>
+              <Text style={styles.date}>{formatDate(blog.date)}</Text>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  navigation.navigate("BlogDetail", {
+                    title: blog.title,
+                    date: blog.date,
+                    content: blog.content,
+                    image: blog.image,
+                  })
+                }
+              >
+                <Text style={styles.buttonText}>Lees meer</Text>
+              </TouchableOpacity>
+            </View>
           ))
         ) : (
-          <Text style={{ color: '#333', textAlign: 'center', marginTop: 20 }}>
-            Geen blogs beschikbaar
-          </Text>
+          <Text style={styles.noContent}>Geen blogs beschikbaar</Text>
         )}
       </ScrollView>
     </View>
@@ -90,27 +92,67 @@ const BlogScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  blogCard: {
+  container: {
+    flex: 1,
+    backgroundColor: '#91c98c',
+    paddingTop: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: 'white',
+    textAlign: 'center',
+  },
+  scrollContent: {
+    paddingBottom: 16,
+    paddingHorizontal: 10,
+  },
+  card: {
     backgroundColor: 'white',
     borderRadius: 8,
     padding: 10,
     marginBottom: 20,
-    alignSelf: 'stretch',
+    alignItems: 'center',
   },
   image: {
     width: '100%',
     height: 200,
     borderRadius: 8,
   },
-  blogTitle: {
+  cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
     marginTop: 10,
+    textAlign: 'center',
   },
-  blogDate: {
+  date: {
     fontSize: 14,
     color: '#666',
+    marginBottom: 8,
+  },
+  button: {
+    backgroundColor: '#FF5733',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginTop: 4,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  noContent: {
+    color: '#333',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
 

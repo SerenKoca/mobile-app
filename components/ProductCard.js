@@ -1,12 +1,18 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const ProductCard = ({ title, price, image, onPress }) => {
+const ProductCard = ({ title, price, image, onPress, onToggleWishlist, isInWishlist }) => {
   return (
     <View style={styles.card}>
-      <Image style={styles.image} source={image} />
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={image} />
 
+        <TouchableOpacity onPress={onToggleWishlist} style={styles.heartButton}>
+          <Text style={styles.heartText}>{isInWishlist ? '❤️' : '🤍'}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.title}>{title}</Text>
       <Text style={styles.price}>€ {price.toFixed(2)}</Text>
 
       <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -25,22 +31,30 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     alignItems: 'center',
   },
+  imageContainer: {
+    width: '100%',
+    position: 'relative',
+  },
   image: {
     width: '100%',
     height: 120,
     borderRadius: 8,
   },
+  heartButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    borderRadius: 20,
+    padding: 6,
+  },
+  heartText: {
+    fontSize: 18,
+  },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 8,
-    textAlign: 'center',
-  },
-  description: {
-    fontSize: 12,
-    color: 'gray',
-    marginTop: 4,
-    marginBottom: 6,
     textAlign: 'center',
   },
   price: {

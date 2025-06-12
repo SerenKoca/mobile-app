@@ -10,12 +10,6 @@ const BlogScreen = ({ navigation }) => {
   useEffect(() => {
     const { webflowBlogApiUrl, webflowBlogApiToken } = Constants.expoConfig.extra;
 
-    if (!webflowBlogApiUrl || !webflowBlogApiToken) {
-      console.error("❌ Missing Webflow Blog API credentials!");
-      setError(true);
-      return;
-    }
-
     fetch(webflowBlogApiUrl, {
       headers: {
         Authorization: `Bearer ${webflowBlogApiToken}`,

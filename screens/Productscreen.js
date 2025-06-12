@@ -23,11 +23,6 @@ const ProductScreen = ({ navigation }) => {
   useEffect(() => {
     const { webflowApiUrl, webflowApiToken } = Constants.expoConfig?.extra || Constants.manifest?.extra || {};
 
-    if (!webflowApiUrl || !webflowApiToken) {
-      console.error("❌ Missing Webflow API credentials!");
-      return;
-    }
-
     fetch(webflowApiUrl, {
       headers: {
         Authorization: `Bearer ${webflowApiToken}`,
@@ -81,7 +76,6 @@ const ProductScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Sticky wishlist knop */}
       <TouchableOpacity
         style={styles.wishlistButton}
         onPress={() => navigation.navigate("Wishlist", { wishlist })}
@@ -92,7 +86,6 @@ const ProductScreen = ({ navigation }) => {
         <Text style={styles.wishlistButtonText}>Wishlist</Text>
       </TouchableOpacity>
 
-      {/* Scrollbare content */}
       <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingTop: 80 }}>
 
         <Text style={styles.title}>Onze Producten</Text>

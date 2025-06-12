@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Touchable, TouchableOpacity } from 'react-native';
 
 const DetailsScreen = ({ route }) => {
-  const { title, subtitle, price, image } = route.params; // Haal de parameters op uit vorige scherm via navigatie
+  const { title, subtitle, price, image } = route.params; // Haal de parameters op
   const [quantity, setQuantity] = React.useState(1); // Begin met 1 als hoeveelheid
 
   //Met + en - knoppen kun je het aantal veranderen (niet lager dan 1).
@@ -13,7 +13,6 @@ const DetailsScreen = ({ route }) => {
     }
   };
   
-  //De details van het product worden hier weergegeven.
   return (
     <View style={styles.container}>
       <View style={styles.containerProduct}>
